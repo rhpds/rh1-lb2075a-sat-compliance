@@ -145,7 +145,7 @@ approval_checklist:
   content:
     prerequisites_verifiable: false  # GUI-driven steps; Satellite Web UI state not fully scriptable at intake
     assessment_strategy: "Per-module solve and validation scripts using Satellite API checks for GUI-driven steps and CLI output verification for Hammer-driven steps. Capstone module (09) validates scan completion, report visibility, and SSH empty-password remediation state."
-    catalog_gap: ""
+    catalog_gap: "This lab covers the end-to-end OpenSCAP compliance workflow in Red Hat Satellite 6.19 with RHEL 10 — from content view and activation key setup through host registration, foreman_scap_client deployment, DISA STIG policy configuration with a custom tailoring file, compliance scanning, and Ansible-based remediation. Existing catalog items address Satellite basics or standalone OpenSCAP usage but do not demonstrate the integrated Satellite compliance workflow with tailoring files and automated remediation via Satellite's built-in Ansible integration."
     design_overview: "Red Hat Satellite Compliance is a 45-minute intermediate lab covering the end-to-end OpenSCAP compliance workflow in Satellite 6.19: content views, activation keys, host groups, compliance policies, host registration, OpenSCAP client deployment via Ansible, compliance scanning, and Ansible-based remediation. The lab uses two RHEL 10 managed hosts and is primarily GUI-driven with targeted Hammer CLI steps in modules 4 and 7."
     module_summaries:
       - title: "OpenSCAP Compliance Introduction"
