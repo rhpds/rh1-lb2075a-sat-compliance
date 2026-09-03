@@ -4,32 +4,32 @@ antora:
   name: modules
   dir: www
   modules:
-    - name: module-01
-      label: "Introduction"
+    - name: module-01-introduction
+      label: "OpenSCAP Compliance Introduction"
       solveButton: true
-    - name: module-02
-      label: "Module 02"
+    - name: module-02-content-view
+      label: "Create a content view for OpenSCAP repositories"
       solveButton: true
-    - name: module-03
-      label: "Module 03"
+    - name: module-03-activation-key
+      label: "Create an activation key"
       solveButton: true
-    - name: module-04
-      label: "module 04"
+    - name: module-04-openscap-content
+      label: "Ingest and configure OpenSCAP content"
       solveButton: true
-    - name: module-05
-      label: "Module 05"
+    - name: module-05-host-group
+      label: "Configure a host group"
       solveButton: true
-    - name: module-06
-      label: "Module 06"
+    - name: module-06-compliance-policy
+      label: "Create a compliance policy"
       solveButton: true
-    - name: module-07
-      label: "Module 07"
+    - name: module-07-register-hosts
+      label: "Register hosts to the RHEL10 host group"
       solveButton: true
-    - name: module-08
-      label: "Module 08"
+    - name: module-08-install-client
+      label: "Install the OpenSCAP client via Ansible roles"
       solveButton: true
-    - name: module-09
-      label: "Module 09"
+    - name: module-09-run-scan
+      label: "Run an OpenSCAP scan on a host"
       solveButton: true
 
 tabs:
