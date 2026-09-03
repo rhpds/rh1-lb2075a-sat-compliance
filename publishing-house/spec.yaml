@@ -143,7 +143,7 @@ tracking:
 approval_checklist:
 
   content:
-    prerequisites_verifiable: null
+    prerequisites_verifiable: false  # GUI-driven steps; Satellite Web UI state not fully scriptable at intake
     assessment_strategy: "Per-module solve and validation scripts using Satellite API checks for GUI-driven steps and CLI output verification for Hammer-driven steps. Capstone module (09) validates scan completion, report visibility, and SSH empty-password remediation state."
     catalog_gap: ""
     design_overview: "Red Hat Satellite Compliance is a 45-minute intermediate lab covering the end-to-end OpenSCAP compliance workflow in Satellite 6.19: content views, activation keys, host groups, compliance policies, host registration, OpenSCAP client deployment via Ansible, compliance scanning, and Ansible-based remediation. The lab uses two RHEL 10 managed hosts and is primarily GUI-driven with targeted Hammer CLI steps in modules 4 and 7."
