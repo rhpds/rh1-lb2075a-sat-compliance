@@ -2,7 +2,7 @@
 
 ## Brief Overview
 
-This module registers the two RHEL 10 managed hosts (rhel1.lab and rhel2.lab) to Satellite under the RHEL10 host group. Participants use Hammer CLI on satellite.lab to generate a host registration script that includes the activation key, host group, Insights enrollment, and Remote Execution configuration. The generated script is then run over SSH on each host. After registration, both hosts appear in Satellite as managed hosts with the RHEL10 content view, Satellite Client package available, and Remote Execution enabled.
+This module registers the two RHEL 10 managed hosts (rhel1.lab and rhel2.lab) to Satellite under the RHEL10 host group. Participants use Hammer CLI on satellite.lab to generate a host registration script that includes the host group, Insights enrollment, and Remote Execution configuration. The generated script is then run over SSH on each host. After registration, both hosts appear in Satellite as managed hosts with the RHEL10 content view, Satellite Client package available, and Remote Execution enabled.
 
 ## Audience and Time
 
@@ -27,38 +27,27 @@ This module registers the two RHEL 10 managed hosts (rhel1.lab and rhel2.lab) to
 ## Detailed Steps
 
 1. Open the satellite.lab terminal tab.
-2. Generate the host registration script using Hammer, specifying the host group and activation key:
-   ```
-   hammer host-registration generate-command \
-     --activation-key RHEL10 \
-     --hostgroup RHEL10 \
-     --insecure true \
-     --setup-insights true \
-     --setup-remote-execution true \
-     --remote-execution-interface eth0
-   ```
-3. Copy the generated script output and store it as a shell variable (the output will be a long `curl` command):
+2. Generate the host registration script using Hammer and store it directly as a shell variable:
    ```
    SAT_HOST_REGISTRATION_SCRIPT=$(hammer host-registration generate-command \
-     --activation-key RHEL10 \
-     --hostgroup RHEL10 \
+     --hostgroup "RHEL10" \
      --insecure true \
+     --force true \
      --setup-insights true \
-     --setup-remote-execution true \
-     --remote-execution-interface eth0 2>/dev/null | tail -1)
+     --setup-remote-execution true)
    ```
-4. Register rhel1.lab by running the script over SSH:
+3. Register rhel1.lab by running the script over SSH:
    ```
    ssh root@rhel1.lab bash -c "$SAT_HOST_REGISTRATION_SCRIPT"
    ```
-5. Wait for the registration to complete — the output will show subscription, repository enablement, and Insights enrollment steps.
-6. Register rhel2.lab:
+4. Note: these commands will take a few minutes to complete — the output will show subscription, repository enablement, and Insights enrollment steps.
+5. Register rhel2.lab:
    ```
    ssh root@rhel2.lab bash -c "$SAT_HOST_REGISTRATION_SCRIPT"
    ```
-7. Wait for rhel2.lab registration to complete.
-8. In the Satellite Web UI, navigate to **Hosts > All Hosts**.
-9. Confirm both rhel1.lab and rhel2.lab appear in the host list with:
+6. Wait for rhel2.lab registration to complete.
+7. In the Satellite Web UI, navigate to **Hosts > All Hosts**.
+8. Confirm both rhel1.lab and rhel2.lab appear in the host list with:
    - Host group: RHEL10
    - Content view: RHEL10
    - Lifecycle environment: Library
@@ -66,12 +55,12 @@ This module registers the two RHEL 10 managed hosts (rhel1.lab and rhel2.lab) to
 
 ## Key Takeaways
 
-- The Hammer `host-registration generate-command` workflow produces a curl-based registration script that includes all the configuration parameters (activation key, host group, Insights, Remote Execution) in a single command
+- The Hammer `host-registration generate-command` workflow produces a curl-based registration script that includes all the configuration parameters (host group, Insights, Remote Execution) in a single command
 - Running the registration script on a host installs the Satellite client tools, subscribes the host to the RHEL10 content view, and sets up SSH keys for Remote Execution
 - Registering hosts to a host group (rather than registering without a group) means they inherit the group's OpenSCAP capsule assignment and Ansible role assignment, enabling the next two modules to work correctly
+- The `--force true` flag forces re-registration, which is useful in lab environments where hosts may have been previously registered
 
 ## Infrastructure Notes
 
 - Root SSH access from satellite.lab to rhel1.lab and rhel2.lab must be pre-configured (setup automation)
 - The `--insecure true` flag is appropriate for lab environments; production environments should use proper TLS certificate validation
-- `--remote-execution-interface eth0` — verify the correct interface name for the lab network; may vary depending on CNV VM configuration

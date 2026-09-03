@@ -21,24 +21,24 @@ This module creates the RHEL10 host group in Satellite — a container object th
 | Section | Title | Duration |
 |---------|-------|----------|
 | 1 | Create the host group and set core properties | 3 min |
-| 2 | Assign OpenSCAP capsule and Ansible role | 2 min |
+| 2 | Assign Ansible role and activation key | 2 min |
 
 ## Detailed Steps
 
 1. In the Satellite Web UI, navigate to **Configure > Host Groups**.
 2. Click **Create host group**.
-3. On the **Host Group** tab:
+3. On the main **Host Group** tab:
    - Set **Name** to `RHEL10`
+   - Set **Content Source** to `satellite.lab`
    - Set **Lifecycle environment** to `Library`
    - Set **Content view** to `RHEL10`
-4. Click the **Activation Keys** tab:
-   - Add `RHEL10` as the activation key
-5. Click the **OpenSCAP** tab:
    - Set **OpenSCAP capsule** to `satellite.lab` (the default capsule)
-6. Click the **Ansible Roles** tab:
+4. Click the **Ansible Roles** tab:
    - Add `theforeman.foreman_scap_client` to the list of assigned roles
-7. Click **Submit** to save the host group.
-8. Confirm the RHEL10 host group appears in the list with the correct lifecycle environment and content view displayed.
+5. Click the **Activation Keys** tab:
+   - Add `RHEL10` as the activation key
+6. Click **Submit** to save the host group.
+7. Confirm the RHEL10 host group appears in the list with the correct lifecycle environment and content view displayed.
 
 ## Key Takeaways
 

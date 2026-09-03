@@ -2,7 +2,7 @@
 
 ## Brief Overview
 
-This module deploys the OpenSCAP scanning client to both managed hosts by triggering the theforeman.foreman_scap_client Ansible role from the Satellite Web UI. When the role runs, it installs the `rubygem-foreman_scap_client` package, writes the OpenSCAP client configuration file (pointing to the Satellite capsule for ARF report upload), and creates the cron job that will execute scans on the schedule defined in the compliance policy. After this module, both hosts are ready to accept scan commands from Satellite.
+This module demonstrates manual execution of the theforeman.foreman_scap_client Ansible role on rhel1.lab from the Satellite Web UI. In practice, the role runs automatically approximately 5 minutes after host registration; this module shows how to trigger it manually so participants can observe the job in real time. When the role runs, it installs the `rubygem-foreman_scap_client` package, writes the OpenSCAP client configuration file at `/etc/foreman_scap_client/config.yaml` (pointing to the Satellite capsule for ARF report upload), and creates a cron job that will execute scans on the schedule defined in the compliance policy. After this module, rhel1.lab is ready to accept scan commands from Satellite.
 
 ## Audience and Time
 
@@ -12,31 +12,31 @@ This module deploys the OpenSCAP scanning client to both managed hosts by trigge
 
 ## Learning Objectives
 
-- Trigger an Ansible role run on managed hosts from the Red Hat Satellite Web UI
+- Trigger an Ansible role run on a managed host from the Red Hat Satellite Web UI
 - Monitor the status of a Satellite Remote Execution job
-- Verify that the OpenSCAP client package and cron job are installed on managed hosts
+- Verify that the OpenSCAP client package and cron job are installed on a managed host
 
 ## Lab Structure
 
 | Section | Title | Duration |
 |---------|-------|----------|
-| 1 | Run the Ansible role on managed hosts | 3 min |
+| 1 | Run the Ansible role on rhel1.lab | 3 min |
 | 2 | Check the status of the job | 2 min |
 
 ## Detailed Steps
 
 1. In the Satellite Web UI, navigate to **Hosts > All Hosts**.
-2. Select both rhel1.lab and rhel2.lab using the checkboxes.
-3. From the **Actions** drop-down (or "Select Action"), choose **Assign Ansible roles** (if not already assigned) — confirm theforeman.foreman_scap_client is listed.
-4. With both hosts selected, click **Actions > Run all Ansible roles** (or navigate to **Configure > Ansible > Run roles**).
-5. In the job wizard, confirm the target hosts include both rhel1.lab and rhel2.lab.
-6. Click **Run** (or **Submit**) to start the Ansible role job.
-7. The UI will redirect to the job detail page (or navigate to **Monitor > Jobs**).
-8. Observe the job progress — the output will show Ansible task steps: package install, config file write, cron job creation.
-9. Wait for both hosts to report success (green status).
-10. Optionally verify on rhel1.lab via the terminal tab:
-    - Confirm package: `rpm -q rubygem-foreman_scap_client`
-    - Confirm cron job: `crontab -l` or check `/etc/cron.d/` for foreman_scap_client entries
+2. Click into **rhel1.lab** to open the host detail page.
+3. Click the accordion next to **Schedule a job** and select **Run Ansible roles**.
+4. In the job wizard, confirm the target host is rhel1.lab.
+5. Click **Run** (or **Submit**) to start the Ansible role job.
+6. The UI will redirect to the job detail page (or navigate to **Monitor > Jobs**).
+7. Observe the job progress — the output will show Ansible task steps: package install (`rubygem-foreman_scap_client`), configuration file write (`/etc/foreman_scap_client/config.yaml`), and cron job creation for ARF report uploads.
+8. Wait for rhel1.lab to report success (green status).
+9. Optionally verify on rhel1.lab via the terminal tab:
+   - Confirm package: `rpm -q rubygem-foreman_scap_client`
+   - Confirm cron job: `crontab -l` or check `/etc/cron.d/` for foreman_scap_client entries
+10. Feel free to run the role on rhel2.lab as well using the same steps if desired.
 
 ## Key Takeaways
 
@@ -48,4 +48,5 @@ This module deploys the OpenSCAP scanning client to both managed hosts by trigge
 
 - Remote Execution must be enabled on the hosts (configured during registration in module 07)
 - The role applies the compliance policy configuration automatically — the cron job schedule is derived from the policy schedule set in module 06
+- The role runs automatically ~5 minutes after host registration; this module demonstrates manual execution for observability
 - All steps are GUI-only in Satellite Web UI; optional verification steps use the rhel1.lab terminal

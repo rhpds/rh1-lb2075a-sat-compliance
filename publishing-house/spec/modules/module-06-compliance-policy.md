@@ -2,7 +2,7 @@
 
 ## Brief Overview
 
-This module creates the compliance policy that ties together the SCAP content, tailoring file, Ansible deployment method, schedule, and host group into a single enforceable policy object. Participants use the Satellite Web UI policy wizard to configure "DISA STIG no empty passwords ssh" — a targeted policy that scans for the SSH empty-password vulnerability using the DISA STIG XCCDF profile and the custom SSHD tailoring file created in module 04. The policy is associated with the RHEL10 host group so it applies to all hosts registered under that group.
+This module creates the compliance policy that ties together the SCAP content, tailoring file, Ansible deployment method, schedule, and host group into a single enforceable policy object. Participants use the Satellite Web UI policy wizard to configure "DISA STIG no empty passwords ssh" — a targeted policy that scans for the SSH empty-password vulnerability using the Red Hat STIG XCCDF profile and the custom SSHD tailoring file created in module 04. The policy is associated with the RHEL10 host group so it applies to all hosts registered under that group.
 
 ## Audience and Time
 
@@ -26,7 +26,7 @@ This module creates the compliance policy that ties together the SCAP content, t
 ## Detailed Steps
 
 1. In the Satellite Web UI, navigate to **Hosts > Compliance > Policies**.
-2. Click **New Compliance Policy**.
+2. Click **New Policy**.
 3. On the **Deployment options** step:
    - Select **Ansible** as the deployment method
    - Click **Next**
@@ -34,20 +34,20 @@ This module creates the compliance policy that ties together the SCAP content, t
    - Set **Name** to `DISA STIG no empty passwords ssh`
    - Click **Next**
 5. On the **SCAP content** step:
-   - Select the SCAP content entry that matches the RHEL 10 STIG data stream (e.g., `ssg-rhel10-ds.xml`)
-   - Set **XCCDF Profile** to `DISA STIG for Red Hat Enterprise Linux 10` (or the STIG profile in the list)
-   - Set **Tailoring file** to `RHEL10 STIG sshd` (created in module 04)
-   - Set **Tailoring file profile** to the STIG sshd profile within the tailoring file
+   - Set **SCAP Content** to `Red Hat RHEL10 default content`
+   - Set **XCCDF Profile** to `Red Hat STIG for Red Hat Enterprise Linux 10`
+   - Set **Tailoring file** to `STIG SSHD Tailoring file` (created in module 04)
+   - Set **XCCDF Profile in Tailoring File** to `DISA STIG for RHEL10 No Empty Passwords`
    - Click **Next**
 6. On the **Schedule** step:
    - Set the period to **Weekly**
-   - Accept the default day and time, or set a specific scan window
+   - Explicitly select **Sunday** as the scan day
    - Click **Next**
 7. On the **Locations** step:
-   - Confirm the default location is selected
+   - Select **Vancouver** as the location
    - Click **Next**
 8. On the **Organizations** step:
-   - Confirm the default organization is selected
+   - Select **Acme Org** as the organization
    - Click **Next**
 9. On the **Host groups** step:
    - Add `RHEL10` to the selected host groups
@@ -58,10 +58,11 @@ This module creates the compliance policy that ties together the SCAP content, t
 
 - Compliance policies in Satellite combine what to scan (SCAP content + XCCDF profile), how to deploy the scanner (Ansible, Puppet, or manual), when to scan (schedule), and where to scan (host groups)
 - Selecting Ansible as the deployment method means Satellite will use Remote Execution to push and run the OpenSCAP scanner on managed hosts — no agent pre-installation is needed beyond what the foreman_scap_client role provides
-- Tailoring files allow a single DISA STIG profile to be scoped to specific rules, reducing scan noise and focusing remediation effort on the highest-priority findings for the environment
+- Tailoring files allow a single STIG profile to be scoped to specific rules, reducing scan noise and focusing remediation effort on the highest-priority findings for the environment
+- Red Hat's STIG profile (`Red Hat STIG for Red Hat Enterprise Linux 10`) is derived from the DISA STIG but may differ in timing and specific rule content; the tailoring file's profile (`DISA STIG for RHEL10 No Empty Passwords`) comes directly from the DISA benchmark
 
 ## Infrastructure Notes
 
 - All steps are GUI-only via the Satellite Web UI policy wizard
 - The tailoring file must already exist in Satellite (created in module 04) before this module
-- The XCCDF profile name in the UI may vary slightly depending on the SSG version — select the profile with "STIG" in its name for RHEL 10
+- The **XCCDF Profile in Tailoring File** field is a required selection in the wizard and must be set explicitly — it does not auto-populate from the tailoring file selection

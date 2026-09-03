@@ -25,17 +25,17 @@ This module creates an activation key named RHEL10 in Satellite. The activation 
 
 ## Detailed Steps
 
-1. In the Satellite Web UI, navigate to **Content > Activation Keys**.
+1. In the Satellite Web UI, navigate to **Content > Lifecycle > Activation Keys**.
 2. Click **Create activation key**.
 3. Enter `RHEL10` as the name.
-4. Select the **Library** lifecycle environment.
-5. Select the **RHEL10** content view created in module 02.
-6. Click **Save**.
-7. On the activation key detail page, click the **Repositories** tab.
-8. Locate **Red Hat Satellite Client 6 for RHEL 10 x86_64 (RPMs)** in the repository list.
-9. Change the override for this repository from **Default** to **Enabled**.
-10. Click **Save** to confirm the override.
-11. Confirm that the activation key summary shows the RHEL10 content view and Library lifecycle environment, and that Satellite Client 6 is listed as enabled in the Repositories tab.
+4. Click **Assign content view environments** to open the assignment modal.
+5. Inside the modal, select the **Library** lifecycle environment.
+6. Select the **RHEL10** content view created in module 02.
+7. Click **Save**.
+8. On the activation key detail page, click the **Repository Sets** tab.
+9. Locate **Red Hat Satellite Client 6 for RHEL 10 x86_64 (RPMs)** in the repository list.
+10. Select the radio button for this repository, then click **Select Action → Override to Enabled**.
+11. Confirm that the activation key summary shows the RHEL10 content view and Library lifecycle environment, and that Satellite Client 6 is listed as enabled in the Repository Sets tab.
 
 ## Key Takeaways
 

@@ -26,21 +26,19 @@ This module creates the RHEL10 content view in Satellite — the foundational ob
 
 ## Detailed Steps
 
-1. In the Satellite Web UI, navigate to **Content > Content Views**.
+1. In the Satellite Web UI, navigate to **Content > Lifecycle > Content Views**.
 2. Click **Create content view**.
 3. Enter `RHEL10` as the name; leave the type as "Content View" (not composite).
 4. Click **Create content view** to save.
 5. In the newly created content view, click the **Repositories** tab.
 6. Click **Add repositories**.
-7. Filter by "RHEL 10" to locate the correct repos. Add all three:
+7. Use the **Status** dropdown and select **All** to make all repositories visible. Add all three:
    - Red Hat Enterprise Linux 10 BaseOS (RPMs)
    - Red Hat Enterprise Linux 10 AppStream (RPMs)
    - Red Hat Satellite Client 6 for RHEL 10 (RPMs)
 8. Click **Add repositories** to confirm the selection.
 9. Click **Publish new version**.
-10. Accept the default version description and click **Next**, then **Finish**.
-11. Wait for the publish task to complete (progress indicator in the task list).
-12. Once published, confirm the version appears in the **Versions** tab and is promoted to **Library**.
+10. Click **Promote**, then **Next**, then **Finish**.
 
 ## Key Takeaways
 

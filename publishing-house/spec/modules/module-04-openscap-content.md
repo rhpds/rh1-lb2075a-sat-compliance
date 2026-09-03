@@ -29,12 +29,12 @@ This is the most CLI-intensive module in the lab. Participants use the Hammer CL
 1. Open the satellite.lab terminal tab.
 2. Run the SCAP content bulk upload command to load the SCAP Security Guide content into Satellite:
    ```
-   hammer scap-content bulk-upload --type xccdf --directory /usr/share/xml/scap/ssg/content/
+   hammer scap-content bulk-upload --type default
    ```
-3. Confirm the output lists uploaded SCAP content files (e.g., `ssg-rhel10-ds.xml`).
+3. Navigate to **Hosts > Compliance > SCAP contents** in the Satellite Web UI to confirm the upload — the RHEL 10 SCAP content entries should now appear in the list.
 4. Import the `theforeman.foreman_scap_client` Ansible role from the Satellite capsule into Satellite's role library:
    ```
-   hammer ansible roles import --proxy-id 1
+   hammer ansible roles import --proxy-id 1 --role-names theforeman.foreman_scap_client
    ```
 5. Confirm the output includes `theforeman.foreman_scap_client` in the list of imported roles.
 6. Import the Ansible variables associated with the role so Satellite can expose them for customization in host groups:
@@ -44,8 +44,11 @@ This is the most CLI-intensive module in the lab. Participants use the Hammer CL
 7. Confirm the variables list is populated (several foreman_scap_client-prefixed variables should appear).
 8. Create the custom STIG SSHD tailoring file in Satellite, pointing to the pre-staged tailoring XML file:
    ```
-   hammer tailoring-file create --name "RHEL10 STIG sshd" \
-     --scap-file /root/ssg-rhel10-stig-sshd-tailoring.xml
+   hammer tailoring-file create \
+     --name "STIG SSHD Tailoring file" \
+     --scap-file /tmp/rhel10-stig-sshd-tailoring.xml \
+     --organizations "Acme Org" \
+     --locations "Vancouver"
    ```
 9. Confirm the command completes without error and note the tailoring file ID returned.
 
@@ -57,7 +60,7 @@ This is the most CLI-intensive module in the lab. Participants use the Hammer CL
 
 ## Infrastructure Notes
 
-- SCAP Security Guide RPM must be installed on satellite.lab (pre-provisioned by setup automation, content at `/usr/share/xml/scap/ssg/content/`)
-- STIG SSHD tailoring file must be pre-staged at `/root/ssg-rhel10-stig-sshd-tailoring.xml` by setup automation
+- SCAP Security Guide RPM must be installed on satellite.lab (pre-provisioned by setup automation)
+- STIG SSHD tailoring file must be pre-staged at `/tmp/rhel10-stig-sshd-tailoring.xml` by setup automation
 - `proxy-id 1` assumes the default Satellite capsule ID; verify with `hammer capsule list` if needed
 - This module uses the satellite.lab terminal; no access to rhel1.lab or rhel2.lab required
