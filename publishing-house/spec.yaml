@@ -20,43 +20,107 @@ project:
   workflow_id: "b4f681ab-c2de-464f-a302-e383410ee78d"
 
 spec:
-  title: ""
-  learning_objectives: []
-  modules: []              # [{id, title, duration_min}] — written by intake Phase 4; id is stable (e.g. module-01)
+  title: "Red Hat Satellite Compliance"
+  learning_objectives:
+    - "Configure Red Hat Satellite compliance policies using OpenSCAP and SCAP Security Guide profiles"
+    - "Manage RHEL host registration and content views in Red Hat Satellite"
+    - "Analyze OpenSCAP compliance scan results and remediate violations using Satellite's Ansible-based remediation"
+  modules:
+    - id: module-01
+      title: "OpenSCAP Compliance Introduction"
+      duration_min: 5
+      status: not_started
+    - id: module-02
+      title: "Create a content view for OpenSCAP repositories"
+      duration_min: 5
+      status: not_started
+    - id: module-03
+      title: "Create an activation key"
+      duration_min: 5
+      status: not_started
+    - id: module-04
+      title: "Ingest and configure OpenSCAP content"
+      duration_min: 7
+      status: not_started
+    - id: module-05
+      title: "Configure a host group"
+      duration_min: 5
+      status: not_started
+    - id: module-06
+      title: "Create a compliance policy"
+      duration_min: 5
+      status: not_started
+    - id: module-07
+      title: "Register hosts to the RHEL10 host group"
+      duration_min: 5
+      status: not_started
+    - id: module-08
+      title: "Install the OpenSCAP client via Ansible roles"
+      duration_min: 5
+      status: not_started
+    - id: module-09
+      title: "Run an OpenSCAP scan on a host"
+      duration_min: 8
+      status: not_started
   environment:
-    platform: ""               # ocp | rhel-vms — determines which sizing fields apply
-    topology: ""               # shared-cluster | per-student | cnv-pool
-    cloud_provider: cnv        # cnv | aws — cnv is default
-    max_concurrent_users: null # required if topology = shared-cluster
+    platform: "rhel-vms"               # ocp | rhel-vms — determines which sizing fields apply
+    topology: "per-student"             # shared-cluster | per-student | cnv-pool
+    cloud_provider: cnv                 # cnv | aws — cnv is default
+    max_concurrent_users: null          # required if topology = shared-cluster
 
     # --- OCP-specific fields (only when platform = ocp) ---
-    ocp_version: ""                    # e.g. 4.20 — minimum 4.20; leave empty for rhel-vms
-    cluster_type: ""                   # sno | multinode — only for platform = ocp
-    control_plane_instance_count: null # 1 if sno, 3 if multinode
-    control_plane_cpu: null            # 32 if sno, 16 if multinode
-    control_plane_ram_gb: null         # 128 if sno, 64 if multinode
-    worker_count: null                 # number of OCP worker nodes
-    worker_cpu: null                   # vCPU per worker
-    worker_ram_gb: null                # RAM per worker in GB
-    worker_disk_gb: null               # disk per worker in GB
+    ocp_version: ""                     # e.g. 4.20 — minimum 4.20; leave empty for rhel-vms
+    cluster_type: ""                    # sno | multinode — only for platform = ocp
+    control_plane_instance_count: null  # 1 if sno, 3 if multinode
+    control_plane_cpu: null             # 32 if sno, 16 if multinode
+    control_plane_ram_gb: null          # 128 if sno, 64 if multinode
+    worker_count: null                  # number of OCP worker nodes
+    worker_cpu: null                    # vCPU per worker
+    worker_ram_gb: null                 # RAM per worker in GB
+    worker_disk_gb: null                # disk per worker in GB
 
     # --- VM-specific fields (only when platform = rhel-vms) ---
     # Each entry: {role, count, cpu, ram_gb, disk_gb, os}
-    vms_per_student: []
+    vms_per_student:
+      - role: "satellite-server"
+        count: 1
+        cpu: null
+        ram_gb: null
+        disk_gb: null
+        os: "RHEL"
+        hostname: "satellite.lab"
+        notes: "Satellite 6.19 server with RHEL 10 repos pre-synced; sizing TBD in infrastructure phase"
+      - role: "managed-host"
+        count: 1
+        cpu: null
+        ram_gb: null
+        disk_gb: null
+        os: "RHEL 10"
+        hostname: "rhel1.lab"
+        notes: "RHEL 10 managed host; pre-deployed, not yet registered to Satellite at lab start"
+      - role: "managed-host"
+        count: 1
+        cpu: null
+        ram_gb: null
+        disk_gb: null
+        os: "RHEL 10"
+        hostname: "rhel2.lab"
+        notes: "RHEL 10 managed host; pre-deployed, not yet registered to Satellite at lab start"
 
     # --- Common fields (both platforms) ---
-    aap_version: ""                    # required if AAP in products
-    ai_requirement: ""                 # maas | gpu | none
-    ai_model_tier: ""                  # open-source | frontier (if ai_requirement = maas or gpu)
-    ai_model_name: ""                  # specific model e.g. granite-3.1-8b
+    aap_version: ""                     # N/A — Ansible used via Satellite's built-in integration
+    ai_requirement: "none"              # maas | gpu | none
+    ai_model_tier: ""                   # open-source | frontier (if ai_requirement = maas or gpu)
+    ai_model_name: ""                   # specific model e.g. granite-3.1-8b
     ai_justification: ""               # required if ai_model_tier = frontier or ai_requirement = gpu
-    non_ga_products: []                # list of non-GA products/versions
-    non_ga_access_plan: ""             # how access is provided for non-GA products
-    external_services: []              # named external service dependencies e.g. [github.com]
-    gpu_nodes: 0                       # number of GPU nodes (0 = none)
-    gpu_type: ""                       # e.g. NVIDIA A100 40GB (required if gpu_nodes > 0)
-  duration_hours: null
-  audience: ""               # beginner | intermediate | advanced
+    non_ga_products: []                 # all products are GA
+    non_ga_access_plan: ""
+    external_services:
+      - "Red Hat CDN (repositories pre-synced at lab start; no active connection required during participant steps)"
+    gpu_nodes: 0                        # number of GPU nodes (0 = none)
+    gpu_type: ""                        # e.g. NVIDIA A100 40GB (required if gpu_nodes > 0)
+  duration_hours: 0.75
+  audience: "intermediate"             # beginner | intermediate | advanced
 
 development:
   automation:
@@ -80,10 +144,28 @@ approval_checklist:
 
   content:
     prerequisites_verifiable: null
-    assessment_strategy: ""
+    assessment_strategy: "Per-module solve and validation scripts using Satellite API checks for GUI-driven steps and CLI output verification for Hammer-driven steps. Capstone module (09) validates scan completion, report visibility, and SSH empty-password remediation state."
     catalog_gap: ""
-    design_overview: ""
-    module_summaries: []
+    design_overview: "Red Hat Satellite Compliance is a 45-minute intermediate lab covering the end-to-end OpenSCAP compliance workflow in Satellite 6.19: content views, activation keys, host groups, compliance policies, host registration, OpenSCAP client deployment via Ansible, compliance scanning, and Ansible-based remediation. The lab uses two RHEL 10 managed hosts and is primarily GUI-driven with targeted Hammer CLI steps in modules 4 and 7."
+    module_summaries:
+      - title: "OpenSCAP Compliance Introduction"
+        overview: "Introduces OpenSCAP, the SCAP framework, and Satellite's compliance integration. Participants log into the Satellite Web UI and review the full lab workflow."
+      - title: "Create a content view for OpenSCAP repositories"
+        overview: "Creates the RHEL10 content view in Satellite, adds RHEL 10 BaseOS/AppStream/Satellite Client 6 repos, publishes, and promotes to Library."
+      - title: "Create an activation key"
+        overview: "Creates the RHEL10 activation key tied to the content view and enables the Satellite Client 6 repo override for OpenSCAP client installation."
+      - title: "Ingest and configure OpenSCAP content"
+        overview: "Uses Hammer CLI to upload SCAP content, import the foreman_scap_client Ansible role and variables, and create a custom DISA STIG SSHD tailoring file."
+      - title: "Configure a host group"
+        overview: "Creates the RHEL10 host group in Satellite bundling content view, lifecycle environment, OpenSCAP capsule, Ansible role, and activation key."
+      - title: "Create a compliance policy"
+        overview: "Creates the 'DISA STIG no empty passwords ssh' compliance policy via the Satellite wizard with Ansible deployment, STIG profile, tailoring file, and RHEL10 host group."
+      - title: "Register hosts to the RHEL10 host group"
+        overview: "Generates a host registration script via Hammer and runs it over SSH to register rhel1.lab and rhel2.lab under the RHEL10 host group with Insights and Remote Execution enabled."
+      - title: "Install the OpenSCAP client via Ansible roles"
+        overview: "Triggers the foreman_scap_client Ansible role on managed hosts via Satellite Web UI, installing the client package, writing the config, and creating the compliance scan cron job."
+      - title: "Run an OpenSCAP scan on a host"
+        overview: "Capstone: triggers OpenSCAP scans on both hosts, monitors completion, views the compliance report, and remediates the empty-password SSH violation using Satellite's Ansible remediation snippet."
     rcars_overlap_pct: null
     rcars_top_matches: []
     rejections: []

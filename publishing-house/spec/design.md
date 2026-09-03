@@ -1,89 +1,106 @@
-# [Project Title]
-
-<!-- This file is the design document for your lab or demo. -->
-<!-- Fill in each section below, or run /rhdp-publishing-house to have the intake skill help. -->
-<!-- Sections marked with [brackets] are placeholders — replace with real content. -->
-<!-- The validation gate checks for all required sections before submission. -->
+# Red Hat Satellite Compliance
 
 ## Overview
 
-[2-3 sentences on what this lab or demo is and why it exists. Then a direct description of what participants will do — specific enough that someone reading this section immediately understands the content without interpretation. No flowery language. Example: "Participants will deploy a 3-tier application on OpenShift, configure autoscaling, and troubleshoot a simulated pod failure."]
+Red Hat Satellite Compliance is a hands-on lab demonstrating how to use Red Hat Satellite 6.19's built-in compliance features to manage OpenSCAP scanning across RHEL 10 hosts. Participants configure Satellite to serve SCAP content, register RHEL hosts, deploy the OpenSCAP client via Ansible, run compliance scans against a DISA STIG profile, and remediate discovered violations — all within the Satellite Web UI and Hammer CLI. The lab covers the full compliance workflow end-to-end: from creating content views and activation keys, through host registration and client deployment, to running scans and applying Ansible-based remediation.
 
 ## Target Audience
 
-- **Role:** [Data scientists, platform engineers, developers, etc.]
-- **Experience level:** [Beginner, intermediate, or advanced]
-- **What they already know:** [Existing skills and knowledge]
-- **What they don't know:** [Skills this lab teaches]
+- **Role:** Systems administrators, IT security professionals, Red Hat Satellite administrators
+- **Experience level:** Intermediate
+- **What they already know:** Basic Satellite Web UI navigation and administration; familiarity with RHEL system administration; root SSH access patterns; foundational security compliance concepts (what SCAP and STIG are)
+- **What they don't know:** How to configure OpenSCAP compliance policies in Satellite; how to deploy the foreman_scap_client Ansible role via Satellite; how to interpret and remediate SCAP compliance reports using Satellite's built-in tooling
 
 ## Prerequisites
 
-- [What the learner must know or have completed before starting]
-- [Can the lab validate these automatically? Yes/No — brief explanation]
-
-<!-- If no prerequisites, write "None" -->
+- Completion of a Red Hat Satellite Basics lab or equivalent hands-on Satellite administration experience (content view creation, repo sync, host registration fundamentals)
+- Familiarity with RHEL system administration (systemd, package management, SSH)
+- Root SSH access to managed hosts is pre-configured in the lab environment
+- Cannot be fully auto-validated at intake — lab completion depends on Satellite Web UI state (GUI-driven steps) and repository sync status, which are observable but not fully scriptable without Satellite API calls
 
 ## Learning Objectives
 
-1. [Action verb] [specific, measurable outcome]
-2. [Action verb] [specific, measurable outcome]
-3. [Action verb] [specific, measurable outcome]
-
-<!-- Scale to duration: up to 3 objectives per 45 min of content. Start with action verbs: Configure, Deploy, Create, Implement, Troubleshoot, Monitor, Scale. Each should be testable. NOT: Understand, Learn, Know. -->
+1. Configure Red Hat Satellite compliance policies using OpenSCAP and SCAP Security Guide profiles
+2. Manage RHEL host registration and content views in Red Hat Satellite
+3. Analyze OpenSCAP compliance scan results and remediate violations using Satellite's Ansible-based remediation
 
 ## Content Type
 
-[Lab (hands-on) or Demo (presenter-led)]
+Lab (hands-on)
 
 ## Products & Technologies
 
-- [Official Red Hat product name with version if relevant]
-- [Additional products/technologies]
-
-<!-- Use official names: "Red Hat OpenShift", not "OpenShift". List upstream projects separately. -->
+- Red Hat Satellite 6.19
+- Red Hat Enterprise Linux 10
+- OpenSCAP / SCAP Security Guide (SSG)
+- SCAP (Security Content Automation Protocol)
+- XCCDF compliance profiles: DISA STIG, OSPP, HIPAA, PCI-DSS, CIS
+- Hammer CLI
+- theforeman.foreman_scap_client Ansible role
+- Red Hat Ansible Automation Platform (Ansible — via Satellite's built-in integration)
+- Red Hat Insights
+- Remote Execution
 
 ## Module Map
 
 | Module | Title | Duration |
 |--------|-------|----------|
-| 1 | [Module title] | [XX min] |
-| 2 | [Module title] | [XX min] |
-| — | **Total hands-on** | **[X hours]** |
-| — | Intro / presentation | [~XX min] |
-| — | **Total lab** | **[~X hours]** |
-
-<!-- Each module 10-30 min. Total: lab 1-4 hours, demo 15-45 min. Modules should build on each other. -->
+| 1 | OpenSCAP Compliance Introduction | 5 min |
+| 2 | Create a content view for OpenSCAP repositories | 5 min |
+| 3 | Create an activation key | 5 min |
+| 4 | Ingest and configure OpenSCAP content | 7 min |
+| 5 | Configure a host group | 5 min |
+| 6 | Create a compliance policy | 5 min |
+| 7 | Register hosts to the RHEL10 host group | 5 min |
+| 8 | Install the OpenSCAP client via Ansible roles | 5 min |
+| 9 | Run an OpenSCAP scan on a host | 8 min |
+| — | **Total hands-on** | **45 min** |
+| — | Intro / presentation | ~0 min |
+| — | **Total lab** | **~45 min** |
 
 ## Difficulty Level
 
-[Beginner, Intermediate, or Advanced]
+Intermediate
 
 ## Environment
 
-**Learner view:** [What exists when the lab starts — pre-deployed resources, what participants see and interact with. Be specific about cluster details.]
+**Learner view:** The lab starts with a running Satellite 6.19 server (satellite.lab) with RHEL 10 repositories already synced from the Red Hat CDN. Two RHEL 10 managed hosts (rhel1.lab, rhel2.lab) are pre-deployed and reachable via SSH. SCAP Security Guide content and a custom DISA STIG SSHD tailoring file are pre-staged on disk. Participants access four UI surfaces: the Satellite Web UI, a satellite.lab terminal, a rhel1.lab terminal, and a rhel2.lab terminal.
 
-**Automation needed:** [Yes/No]
+**Automation needed:** Yes
 
-[If yes, list what automation must provision — operators, per-user resources, sample apps, data sets.]
+Setup automation must provision:
+- Satellite 6.19 server fully deployed with RHEL 10 BaseOS, AppStream, and Satellite Client 6 repositories pre-synced
+- SCAP Security Guide content (SSG) pre-staged on the satellite.lab filesystem for Hammer upload
+- DISA STIG SSHD tailoring file pre-staged for Hammer `tailoring-file create`
+- Root SSH access pre-configured between the lab environment and rhel1.lab, rhel2.lab
+- RHEL 10 managed hosts booted and reachable (but not yet registered to Satellite)
 
 ## Infrastructure Requirements
 
-- **Cloud provider:** [CNV (default), AWS, or Troshka (bare-metal/nested virt)]
-- **Cluster type:** [Multinode or SNO (Single Node OpenShift)]
-- **OCP version:** [e.g. 4.20 — minimum 4.20]
-- **Topology:** [Shared cluster, per-student, or CNV pool]
-- **Sizing:** [Node types and counts with resources — e.g., "3 control plane (16 CPU, 64GB RAM), 6 workers (8 CPU, 32GB RAM, 100GB disk)"]
-- **Automation approach:** [Ansible, GitOps (Helm + ArgoCD), or combo]
-- **AI/MaaS:** [None, MaaS (open-source model), MaaS (frontier model), or dedicated GPU — include justification if not "none"]
-- **External services:** [Named services — e.g., github.com, registry.access.redhat.com — or "None"]
-- **AAP version:** [e.g. 2.5 — only if AAP is in products; omit otherwise]
-- **Non-GA products:** [Product name + version, with access plan — or "None (all products are GA)"]
+- **Cloud provider:** CNV (default)
+- **Cluster type:** N/A — VM-based lab, no OpenShift
+- **OCP version:** N/A
+- **Topology:** Per-student (each student requires their own Satellite server and RHEL managed hosts; shared infrastructure is not viable due to Satellite's content view and host registration state)
+- **Sizing:** TBD — confirmed in infrastructure phase
+  - satellite.lab: Satellite 6.19 server (CPU/RAM/disk TBD — confirmed in infrastructure phase)
+  - rhel1.lab: RHEL 10 managed host (CPU/RAM/disk TBD — confirmed in infrastructure phase)
+  - rhel2.lab: RHEL 10 managed host (CPU/RAM/disk TBD — confirmed in infrastructure phase)
+- **Automation approach:** Ansible
+- **AI/MaaS:** None
+- **External services:** Red Hat CDN — repositories are pre-synced at lab start; no active CDN connection is required during participant steps. Reference links to DISA/OpenSCAP documentation sites are included but not required for lab completion.
+- **AAP version:** N/A — Ansible is used via Satellite's built-in Ansible integration, not a standalone AAP deployment
+- **Non-GA products:** None (all products are GA)
 
-<!-- Not all fields must be known at intake. "TBD, estimating ~X" is fine. -->
+## Assessment Strategy
 
-## Assessment Strategy (Optional)
+The lab uses per-module solve and validation scripts matched to the Zero-Touch runtime automation framework. Because most modules are GUI-driven, validation relies on Satellite API checks rather than filesystem or CLI state.
 
-<!-- Optional — skip this section for demos or classic labs without verification. -->
-<!-- Relevant for Zero-Touch labs with solve/validate buttons or labs with automated checks. -->
-
-[If applicable: how will we know the learner successfully completed each module? Per module: verification script, solve/validate button, visible result in the UI, or automated check.]
+- **module-01 (Introduction):** No automated validation needed — participants navigate to the Satellite Web UI and confirm they can log in. Solve script logs the URL and confirms HTTP 200.
+- **module-02 (Content view):** Validation script calls the Satellite API to confirm the RHEL10 content view exists, has been published, and is promoted to the Library lifecycle environment.
+- **module-03 (Activation key):** Validation confirms the RHEL10 activation key exists and has the Satellite Client 6 repository override enabled.
+- **module-04 (OpenSCAP content):** Validation confirms SCAP content is uploaded (Hammer `scap-content list`), the foreman_scap_client Ansible role is imported, and the STIG SSHD tailoring file is present.
+- **module-05 (Host group):** Validation confirms the RHEL10 host group exists with correct content view, lifecycle environment, Ansible role, and activation key assigned.
+- **module-06 (Compliance policy):** Validation confirms the "DISA STIG no empty passwords ssh" compliance policy exists, is associated with the RHEL10 host group, and uses the tailoring file.
+- **module-07 (Register hosts):** Validation confirms rhel1.lab and rhel2.lab appear as managed hosts in Satellite, subscribed and in the RHEL10 host group.
+- **module-08 (Install client):** Validation confirms the rubygem-foreman_scap_client package is installed on both managed hosts and the cron job is present.
+- **module-09 (Run scan — capstone):** Validation confirms compliance reports exist for both hosts in Satellite, at least one violation is reported, and the SSH empty-password remediation has been applied (PermitEmptyPasswords is set to no in sshd configuration).
