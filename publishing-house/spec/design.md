@@ -77,18 +77,19 @@ Setup automation must provision:
 
 ## Infrastructure Requirements
 
-- **Cloud provider:** CNV (default)
+- **Cloud provider:** CNV
 - **Cluster type:** N/A — VM-based lab, no OpenShift
 - **OCP version:** N/A
 - **Topology:** Per-student (each student requires their own Satellite server and RHEL managed hosts; shared infrastructure is not viable due to Satellite's content view and host registration state)
-- **Sizing:** TBD — confirmed in infrastructure phase
-  - satellite.lab: Satellite 6.19 server (CPU/RAM/disk TBD — confirmed in infrastructure phase)
-  - rhel1.lab: RHEL 10 managed host (CPU/RAM/disk TBD — confirmed in infrastructure phase)
-  - rhel2.lab: RHEL 10 managed host (CPU/RAM/disk TBD — confirmed in infrastructure phase)
+- **Sizing (from config/instances.yaml):**
+  - satellite.lab: 8 vCPU, 32GB RAM, 540GB disk — image `satellite-server-rhdp-1-6-19-04-09-26-v2`; exposes port 443 via TLS reencrypt route
+  - rhel1.lab: 1 vCPU, 4GB RAM, 40GB disk — image `rhel-10-1-04-15-26`
+  - rhel2.lab: 1 vCPU, 4GB RAM, 40GB disk — image `rhel-10-1-04-15-26`
+- **Firewall:** egress TCP 443 only; inter-VM traffic allowed between virt-launcher pods
 - **Automation approach:** Ansible
 - **AI/MaaS:** None
-- **External services:** Red Hat CDN — repositories are pre-synced at lab start; no active CDN connection is required during participant steps. Reference links to DISA/OpenSCAP documentation sites are included but not required for lab completion.
-- **AAP version:** N/A — Ansible is used via Satellite's built-in Ansible integration, not a standalone AAP deployment
+- **External services:** Red Hat CDN (provisioning only — repos are pre-synced in the Satellite base image; no CDN access required during participant steps)
+- **AAP version:** N/A — Ansible is used via Satellite's built-in integration, not a standalone AAP deployment
 - **Non-GA products:** None (all products are GA)
 
 ## Assessment Strategy

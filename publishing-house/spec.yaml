@@ -84,26 +84,26 @@ spec:
     vms_per_student:
       - role: "satellite-server"
         count: 1
-        cpu: null
-        ram_gb: null
-        disk_gb: null
-        os: "RHEL"
+        cpu: 8
+        ram_gb: 32
+        disk_gb: 540
+        os: "RHEL (satellite-server-rhdp-1-6-19-04-09-26-v2)"
         hostname: "satellite.lab"
-        notes: "Satellite 6.19 server with RHEL 10 repos pre-synced; sizing TBD in infrastructure phase"
+        notes: "Satellite 6.19 server; RHEL 10 repos pre-synced in base image; exposes port 443 via reencrypt route"
       - role: "managed-host"
         count: 1
-        cpu: null
-        ram_gb: null
-        disk_gb: null
-        os: "RHEL 10"
+        cpu: 1
+        ram_gb: 4
+        disk_gb: 40
+        os: "RHEL 10 (rhel-10-1-04-15-26)"
         hostname: "rhel1.lab"
         notes: "RHEL 10 managed host; pre-deployed, not yet registered to Satellite at lab start"
       - role: "managed-host"
         count: 1
-        cpu: null
-        ram_gb: null
-        disk_gb: null
-        os: "RHEL 10"
+        cpu: 1
+        ram_gb: 4
+        disk_gb: 40
+        os: "RHEL 10 (rhel-10-1-04-15-26)"
         hostname: "rhel2.lab"
         notes: "RHEL 10 managed host; pre-deployed, not yet registered to Satellite at lab start"
 
