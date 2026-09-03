@@ -16,8 +16,8 @@ project:
   automation_type: "ansible"
   description: "A hands on lab that delves into Red Hat Satellite features such as compliance monitoring and scanning, image mode, and vulnerability detection and remediation."
   # content_reviewer_email and infra_reviewer_email are assigned by the RHDP team — not set by the author
-  jira_ticket: ""
-  workflow_id: ""
+  jira_ticket: "RHDPCD-1477"
+  workflow_id: "b4f681ab-c2de-464f-a302-e383410ee78d"
 
 spec:
   title: ""
