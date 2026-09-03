@@ -1,0 +1,76 @@
+:imagesdir: ../assets/images
+
+== Ingest and Configure OpenSCAP content
+We'll need to upload the OpenSCAP content, import the OpenSCAP client Ansible role and variables, and create a tailoring file for the STIG SSHD profile. The following sections will guide you through these steps.
+
+=====
+We'll start by uploading the OpenSCAP content to the Satellite server.
+
+.Upload the OpenSCAP Content
+[%collapsible]
+====
+
+The first step to configuring OpenSCAP compliance scanning is to upload the OpenSCAP content to Red Hat Satellite. The content includes the security policies and benchmarks that will be used to evaluate your systems. By loading the default SCAP contents on Satellite Server, you ensure that the data streams from the SCAP Security Guide (SSG) are loaded and assigned to all organizations and locations.
+
+SSG is provided by the operating system of Satellite Server and installed in /usr/share/xml/scap/ssg/content/.
+
+In the `satellite.lab terminal`, run the following command to upload the default SCAP contents to Satellite Server:
+
+[source,bash,run]
+----
+hammer scap-content bulk-upload --type default
+----
+
+The output should look like the following:
+
+.SCAP content upload output
+image::upload-scap-contents-cli.png[]
+
+In the `Satellite Web UI`, navigate to **Hosts > Compliance > SCAP contents** to verify that the SCAP contents have been uploaded successfully.
+
+.SCAP contents in Satellite Web UI
+image::webgui-scap-contents.png[]
+====
+=====
+
+=====
+Next, we'll import the OpenSCAP client Ansible role and variables into the Satellite server.
+
+.Import the OpenSCAP client Ansible role and variables
+[%collapsible]
+====
+The next step is to import the OpenSCAP client Ansible role and variables into Red Hat Satellite. The OpenSCAP client Ansible role is used to install and configure the OpenSCAP client on the managed hosts. The OpenSCAP client Ansible variables define the configuration settings for the OpenSCAP client, such as the location of the SCAP content and the compliance policies to be applied.
+
+[source,bash,run]
+----
+hammer ansible roles import --proxy-id 1 --role-names theforeman.foreman_scap_client
+hammer ansible variables import --proxy-id 1
+----
+
+====
+=====
+
+=====
+Next, we'll import the STIG sshd tailoring file into the Satellite server.
+
+.Import the STIG sshd tailoring file
+[%collapsible]
+====
+The final step is to import the STIG sshd tailoring file into Red Hat Satellite. The tailoring file is an XML file that defines the specific configuration settings for the STIG sshd profile.
+
+Tailoring files are used to customize the compliance policies defined in the SCAP content. They allow you to modify the default settings of the XCCDF profiles to meet your organization's specific security requirements. Generally, complete policies without tailoring files will render the system non-compliant and it may be laborious or impossible to completely remediate the system to compliance.
+
+In particular, this tailoring file will prohibit the use of empty passwords, which is a common security requirement in many organizations. No other rules are included in this tailoring file.
+
+The tailoring file was pre-created and downloaded to the `/tmp` directory on the Satellite server. The creation of tailoring files is a non-trivial task and is outside the scope of this lab. For more information on creating tailoring files, see the https://www.open-scap.org/resources/documentation/[OpenSCAP documentation].
+
+[source,bash,run]
+----
+hammer tailoring-file create \
+    --name "STIG SSHD Tailoring file" \
+    --scap-file /tmp/rhel10-stig-sshd-tailoring.xml\
+    --organizations "Acme Org" \
+    --locations "Vancouver"
+----
+====
+=====

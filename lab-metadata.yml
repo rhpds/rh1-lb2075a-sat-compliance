@@ -1,0 +1,17 @@
+lab:
+  name: "Red Hat Satellite Compliance"
+  shortname: "zt-satellite-compliance"
+  maintainer: "Matthew Yee (myee@redhat.com)"
+
+  description:
+    summary: "Learn how to use Red Hat Satellite to manage compliance at scale."
+    goal: "Use Red Hat Satellite to check compliance and run remediations at scale."
+    concepts:
+     - "Satellite"
+     - "Compliance"
+    use_case: "Manage compliance of systems at scale with Red Hat Satellite"
+    time_to_complete: "45"
+
+  git_ref:
+    production: "main"
+    development: "main"

@@ -1,0 +1,45 @@
+:imagesdir: ../assets/images
+
+== Register hosts to the RHEL10 host group
+
+In this module, you will register *rhel1.lab* and *rhel2.lab* to the Satellite server using the `RHEL10` host group. This will automatically assign the content view, activation key, and OpenSCAP Ansible role to each host.
+
+== Generate the host registration command and register the hosts
+
+In the `satellite.lab terminal` tab run the following command to generate the host registration command and register *rhel1.lab* and *rhel2.lab* to the Satellite server:
+
+[source,bash,run]
+----
+SAT_HOST_REGISTRATION_SCRIPT=$(hammer host-registration generate-command \
+  --hostgroup "RHEL10" \
+  --insecure true \
+  --force true \
+  --setup-insights true \
+  --setup-remote-execution true)
+
+----
+
+To register `rhel1.lab` and `rhel2.lab` to the Satellite server, run the following commands in the `satellite.lab terminal` tab.
+
+Run the command for `rhel1.lab`:
+
+[source,bash,run]
+----
+ssh root@rhel1.lab bash -c "$SAT_HOST_REGISTRATION_SCRIPT"
+----
+
+Run the same command for `rhel2.lab`:
+
+[source,bash,run]
+----
+ssh root@rhel2.lab bash -c "$SAT_HOST_REGISTRATION_SCRIPT"
+----
+
+These commands will take a few minutes to complete.
+
+== Verify the registration
+
+In the `Satellite Web UI`, navigate to **Hosts > All Hosts** and verify that both *rhel1.lab* and *rhel2.lab* appear in the host list with the `RHEL10` host group assigned.
+
+.Registered hosts
+image::hosts-registered.png[]
