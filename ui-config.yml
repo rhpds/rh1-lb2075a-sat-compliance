@@ -37,8 +37,11 @@ tabs:
     url: https://satellite-${guid}.${domain}/
     external: false
   - name: "satellite.lab terminal"
-    url: /wetty_satellite/ssh/root
+    path: /wetty_satellite/ssh/root
+    port: 443
   - name: "rhel1.lab terminal"
-    url: /wetty_rhel1/ssh/root
+    path: /wetty_rhel1/ssh/root
+    port: 443
   - name: "rhel2.lab terminal"
-    url: /wetty_rhel2/ssh/root
+    path: /wetty_rhel2/ssh/root
+    port: 443

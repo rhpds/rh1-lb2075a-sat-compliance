@@ -24,5 +24,5 @@ Defined in `defaults/main.yml`:
 ```yaml
 - hosts: all
   roles:
-    - rh1_lb2075a_sat_compliance.automation.example
+    - <your_namespace>.<your_collection_name>.example
 ```

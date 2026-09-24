@@ -1,10 +1,10 @@
 ---
-namespace: "rh1_lb2075a_sat_compliance"
-name: "automation"
+namespace: "<your_namespace>"
+name: "<your_collection_name>"
 version: "1.0.0"
 readme: README.md
 authors:
-  - "myee111 <myee@redhat.com>"
+  - "<Your Name> <you@example.com>"
 description: "Starter collection for this project's custom Ansible automation."
 license: []
-repository: "https://github.com/rhpds/rh1-lb2075a-sat-compliance"
+repository: "<https://github.com/rhpds/your-project-repo>"

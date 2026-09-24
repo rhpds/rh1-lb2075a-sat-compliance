@@ -1,4 +1,15 @@
 ---
 
 name: modules
+title: "Red Hat Satellite Compliance"
 version: master
+nav:
+  - modules/ROOT/nav.adoc
+
+asciidoc:
+  attributes:
+    experimental: true
+    page-pagination: true
+    guid: '%GUID%'
+    ssh_user: lab-user
+    ssh_password: changeme
