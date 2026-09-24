@@ -41,7 +41,7 @@ spec:
     - id: module-04
       title: "Ingest and configure OpenSCAP content"
       duration_min: 7
-      status: in_progress
+      status: complete
     - id: module-05
       title: "Configure a host group"
       duration_min: 5
