@@ -8,3 +8,4 @@
 * xref:module-07-register-hosts.adoc[Register hosts to the RHEL10 host group]
 * xref:module-08-install-client.adoc[Install the OpenSCAP client via Ansible roles]
 * xref:module-09-run-scan.adoc[Run an OpenSCAP scan on a host]
+* xref:conclusion.adoc[Conclusion and Next Steps]

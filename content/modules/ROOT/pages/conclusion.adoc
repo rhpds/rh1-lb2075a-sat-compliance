@@ -1,0 +1,83 @@
+:imagesdir: ../assets/images
+
+= Conclusion and Next Steps
+
+Congratulations on completing the Red Hat Satellite Compliance lab.
+In about 45 minutes, you walked the full OpenSCAP compliance lifecycle — from uploading SCAP content and registering hosts, to running a scan, reading the compliance report, and remediating a violation, all from inside Satellite.
+
+== What You've Learned
+
+* Configured Red Hat Satellite compliance policies using OpenSCAP and SCAP Security Guide profiles
+* Managed RHEL host registration and content views in Red Hat Satellite
+* Analyzed OpenSCAP compliance scan results and remediated violations using Satellite's Ansible-based remediation
+
+Along the way you:
+
+. Uploaded the default SCAP Security Guide content to Satellite using the Hammer CLI
+. Imported the `theforeman.foreman_scap_client` Ansible role and its variables from the Satellite Smart Proxy
+. Created a STIG SSHD tailoring file that scopes compliance scanning to a single focused rule
+. Built a `RHEL10` content view with the BaseOS, AppStream, and Satellite Client repositories, then published it to the Library lifecycle environment
+. Created an activation key tied to that content view so hosts pick up the right content on registration
+. Configured an `RHEL10` host group that bundles the content view, activation key, and the OpenSCAP Ansible role
+. Created a `DISA STIG no empty passwords ssh` compliance policy using the Red Hat STIG for RHEL 10 profile and the custom tailoring file
+. Registered `rhel1.lab` and `rhel2.lab` to Satellite using the host group
+. Deployed the OpenSCAP client on both hosts by running the `theforeman.foreman_scap_client` Ansible role via remote execution
+. Ran an on-demand OpenSCAP scan on both hosts and reviewed the resulting compliance report in the Satellite Web UI
+. Remediated the empty-password SSH violation on `rhel1.lab` using Satellite's built-in Ansible remediation workflow
+
+== Next Steps
+
+This lab covered one focused SCAP profile with a single tailoring rule. There is a lot more to explore.
+
+=== Expand Your SCAP Coverage
+
+The SCAP Security Guide ships several profiles beyond the DISA STIG used here.
+Try creating additional compliance policies against:
+
+* *OSPP* — Protection Profile for General Purpose Operating Systems, common in government environments
+* *HIPAA* — Health Insurance Portability and Accountability Act baseline for healthcare systems
+* *PCI-DSS* — Payment Card Industry Data Security Standard for cardholder data environments
+* *CIS* — Center for Internet Security benchmarks for broad industry hardening
+
+Running multiple policies against the same host group gives you a full picture of your compliance posture across different regulatory frameworks.
+
+=== Automate Remediation at Scale
+
+In this lab you remediated a single rule on one host.
+Satellite can apply Ansible remediations across large fleets using bulk remote execution jobs.
+Consider:
+
+* Running remediation jobs against host collections instead of individual hosts
+* Scheduling remediation jobs to run automatically after each compliance scan
+* Using Satellite's compliance reports to prioritize the highest-impact rule failures first
+
+=== Integrate with Red Hat Insights
+
+Red Hat Insights receives OpenSCAP compliance reports from Satellite and provides a unified, time-series view across your entire fleet.
+With Insights you can track compliance drift, compare policy adherence across host groups, and generate reports for security and audit teams.
+
+=== Build Custom Tailoring Files
+
+The tailoring file in this lab enabled a single SSHD rule.
+In production, your organization will need tailoring files that enable or disable dozens of rules to match your internal security policy.
+The OpenSCAP documentation covers the XCCDF tailoring format, and the `oscap` command-line tool can help you generate and validate tailoring files from existing profiles.
+
+== References
+
+=== Red Hat Satellite
+
+* https://www.redhat.com/en/technologies/management/satellite[Red Hat Satellite product page]
+* https://docs.redhat.com/en/documentation/red_hat_satellite/6.19/html/managing_security_compliance/[Managing Security Compliance — Red Hat Satellite 6.19]
+* https://docs.redhat.com/en/documentation/red_hat_satellite/6.19/html/managing_security_compliance/deploying-compliance-policies_security-compliance[Deploying Compliance Policies — Red Hat Satellite 6.19]
+* https://developers.redhat.com/content-gateway/link/3890426[Red Hat Satellite Basics lab]
+
+=== OpenSCAP and SCAP Security Guide
+
+* https://www.open-scap.org/[OpenSCAP project]
+* https://www.open-scap.org/documentation/[OpenSCAP documentation]
+* https://www.open-scap.org/resources/documentation/[OpenSCAP resources and tools]
+* https://github.com/ComplianceAsCode/content[SCAP Security Guide on GitHub]
+
+=== Ansible Role
+
+* https://github.com/theforeman/ansible-foreman_scap_client[theforeman/ansible-foreman_scap_client on GitHub]
