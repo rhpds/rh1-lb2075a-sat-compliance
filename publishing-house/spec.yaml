@@ -57,7 +57,7 @@ spec:
     - id: module-08
       title: "Install the OpenSCAP client via Ansible roles"
       duration_min: 5
-      status: in_progress
+      status: complete
     - id: module-09
       title: "Run an OpenSCAP scan on a host"
       duration_min: 8
