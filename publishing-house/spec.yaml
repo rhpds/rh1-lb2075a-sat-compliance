@@ -61,7 +61,7 @@ spec:
     - id: module-09
       title: "Run an OpenSCAP scan on a host"
       duration_min: 8
-      status: in_progress
+      status: complete
   environment:
     platform: "rhel-vms"               # ocp | rhel-vms — determines which sizing fields apply
     topology: "per-student"             # shared-cluster | per-student | cnv-pool
