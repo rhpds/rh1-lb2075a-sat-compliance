@@ -6,7 +6,7 @@ We'll need to upload the OpenSCAP content, import the OpenSCAP client Ansible ro
 =====
 We'll start by uploading the OpenSCAP content to the Satellite server.
 
-.Upload the OpenSCAP Content
+.Step 1 - Upload the OpenSCAP Content
 [%collapsible]
 ====
 
@@ -36,7 +36,7 @@ image::webgui-scap-contents.png[]
 =====
 Next, we'll import the OpenSCAP client Ansible role and variables into the Satellite server.
 
-.Import the OpenSCAP client Ansible role and variables
+.Step 2 - Import the OpenSCAP client Ansible role and variables
 [%collapsible]
 ====
 The next step is to import the OpenSCAP client Ansible role and variables into Red Hat Satellite. The OpenSCAP client Ansible role is used to install and configure the OpenSCAP client on the managed hosts. The OpenSCAP client Ansible variables define the configuration settings for the OpenSCAP client, such as the location of the SCAP content and the compliance policies to be applied.
@@ -53,7 +53,7 @@ hammer ansible variables import --proxy-id 1
 =====
 Next, we'll import the STIG sshd tailoring file into the Satellite server.
 
-.Import the STIG sshd tailoring file
+.Step 3 - Import the STIG sshd tailoring file
 [%collapsible]
 ====
 The final step is to import the STIG sshd tailoring file into Red Hat Satellite. The tailoring file is an XML file that defines the specific configuration settings for the STIG sshd profile.

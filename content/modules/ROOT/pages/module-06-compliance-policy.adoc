@@ -12,7 +12,7 @@ image::compliance-policies-menu.png[]
 =====
 Next, we'll configure the deployment options for the compliance policy.
 
-.Deployment Options tab
+.Step 1 - Deployment Options tab
 [%collapsible]
 ====
 In the `Deployment Options` tab, select the following:
@@ -28,7 +28,7 @@ image::policies-deployment-options.png[]
 =====
 Next, we'll configure the policy attributes for the compliance policy.
 
-.Policy Attributes tab
+.Step 2 - Policy Attributes tab
 [%collapsible]
 ====
 In the `Policy Attributes` tab, enter the following information:
@@ -44,7 +44,7 @@ image::policies-policy-attributes.png[]
 ======
 Next, we'll configure the SCAP content for the compliance policy.
 
-.SCAP Content tab
+.Step 3 - SCAP Content tab
 [%collapsible]
 =====
 In the `SCAP Content` tab, select the following:
@@ -79,7 +79,7 @@ In practice, most organizations use the Red Hat STIG profile from scap-security-
 =====
 Next, we'll configure the schedule for the compliance policy.
 
-.Schedule tab
+.Step 4 - Schedule tab
 [%collapsible]
 ====
 In the `Schedule` tab, select the following:
@@ -96,7 +96,7 @@ image::policies-schedule.png[]
 =====
 Next, we'll configure the locations for the compliance policy.
 
-.Locations tab
+.Step 5 - Locations tab
 [%collapsible]
 ====
 
@@ -110,7 +110,7 @@ image::policies-locations.png[]
 =====
 Now we'll configure the organizations.
 
-.Organizations tab
+.Step 6 - Organizations tab
 [%collapsible]
 ====
 
@@ -124,7 +124,7 @@ image::policies-organizations.png[]
 =====
 Next, we'll configure the host groups for the compliance policy.
 
-.Hostgroups tab
+.Step 7 - Hostgroups tab
 [%collapsible]
 ====
 

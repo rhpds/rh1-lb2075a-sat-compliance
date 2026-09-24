@@ -18,7 +18,7 @@ Next, we'll configure the host group to include the necessary content view, life
 =====
 In this step we'll configure the host group details. This includes the name of the host group, the content source, the lifecycle environment, the content view, the OpenSCAP capsule, and the Ansible role.
 
-.Host group configuration - Host Group details
+.Step 1 - Host Group details
 [%collapsible]
 ====
 In the `Create Host Group` window, enter the following details:
@@ -39,7 +39,7 @@ image::create-host-group-host-group.png[]
 =====
 Next, we'll configure the Ansible roles to be used to install the OpenSCAP client on the managed hosts.
 
-.Host group configuration - Ansible Roles
+.Step 2 - Ansible Roles
 [%collapsible]
 ====
 In the `Ansible Roles` tab, enter the following details:
@@ -56,7 +56,7 @@ image::theforeman-openscap-client-role.png[]
 =====
 Next, we'll configure the activation key to be used to install the OpenSCAP client on the managed hosts.
 
-.Host group configuration - Activation Keys
+.Step 3 - Activation Keys
 [%collapsible]
 ====
 In the `Activation Keys` tab, enter the following details:
