@@ -37,7 +37,7 @@ spec:
     - id: module-03
       title: "Create an activation key"
       duration_min: 5
-      status: in_progress
+      status: complete
     - id: module-04
       title: "Ingest and configure OpenSCAP content"
       duration_min: 7
