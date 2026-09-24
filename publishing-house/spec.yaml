@@ -53,7 +53,7 @@ spec:
     - id: module-07
       title: "Register hosts to the RHEL10 host group"
       duration_min: 5
-      status: in_progress
+      status: complete
     - id: module-08
       title: "Install the OpenSCAP client via Ansible roles"
       duration_min: 5
