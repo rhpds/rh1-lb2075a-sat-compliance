@@ -51,11 +51,6 @@ Consider:
 * Scheduling remediation jobs to run automatically after each compliance scan
 * Using Satellite's compliance reports to prioritize the highest-impact rule failures first
 
-=== Integrate with Red Hat Insights
-
-Red Hat Insights receives OpenSCAP compliance reports from Satellite and provides a unified, time-series view across your entire fleet.
-With Insights you can track compliance drift, compare policy adherence across host groups, and generate reports for security and audit teams.
-
 === Build Custom Tailoring Files
 
 The tailoring file in this lab enabled a single SSHD rule.
