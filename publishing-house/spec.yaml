@@ -33,7 +33,7 @@ spec:
     - id: module-02
       title: "Create a content view for OpenSCAP repositories"
       duration_min: 5
-      status: in_progress
+      status: complete
     - id: module-03
       title: "Create an activation key"
       duration_min: 5
