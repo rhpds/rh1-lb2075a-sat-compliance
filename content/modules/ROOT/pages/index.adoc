@@ -1,5 +1,55 @@
-= My Lab Title
+= Red Hat Satellite Compliance
+:imagesdir: ../assets/images
 
-This project was created with the RHDP Publishing House template.
+Security compliance is an ongoing operational practice, not a one-time audit.
+Organizations running Red Hat Enterprise Linux need a reliable way to scan systems against industry standards, identify violations, and apply remediations at scale.
+Red Hat Satellite provides exactly that — built-in OpenSCAP integration ties compliance scanning directly into your host management workflow.
 
-Run `/rhdp-publishing-house` in Claude Code to begin.
+In this lab, you work through the full compliance lifecycle using Red Hat Satellite 6.19 and two RHEL 10 managed hosts.
+You configure Satellite to serve SCAP content, register hosts, deploy the OpenSCAP client via Ansible, run scans against a DISA STIG profile, and remediate violations — all from the Satellite Web UI and Hammer CLI.
+
+== What You Will Learn
+
+* Configure Red Hat Satellite compliance policies using OpenSCAP and SCAP Security Guide profiles
+* Manage RHEL host registration and content views in Red Hat Satellite
+* Analyze OpenSCAP compliance scan results and remediate violations using Satellite's Ansible-based remediation
+
+== Lab Modules
+
+[cols="1,4,1",options="header"]
+|===
+|Module |Title |Duration
+
+|1 |OpenSCAP Compliance Introduction |5 min
+|2 |Create a content view for OpenSCAP repositories |5 min
+|3 |Create an activation key |5 min
+|4 |Ingest and configure OpenSCAP content |7 min
+|5 |Configure a host group |5 min
+|6 |Create a compliance policy |5 min
+|7 |Register hosts to the RHEL10 host group |5 min
+|8 |Install the OpenSCAP client via Ansible roles |5 min
+|9 |Run an OpenSCAP scan on a host |8 min
+|===
+
+*Estimated total time:* 45 minutes
+
+== Prerequisites
+
+Before starting this lab, you should have:
+
+* Completed a Red Hat Satellite Basics lab or equivalent hands-on Satellite administration experience
+* Familiarity with RHEL system administration — systemd, package management, and SSH
+* Root SSH access to managed hosts is pre-configured in this lab environment
+
+== Lab Environment
+
+Your lab provides three systems:
+
+* *satellite.lab* — Red Hat Satellite 6.19 server with RHEL 10 repositories already synced from the Red Hat CDN.
+SCAP Security Guide content and a custom DISA STIG SSHD tailoring file are pre-staged on disk.
+* *rhel1.lab* — RHEL 10 managed host, reachable via SSH. Not yet registered to Satellite.
+* *rhel2.lab* — RHEL 10 managed host, reachable via SSH. Not yet registered to Satellite.
+
+You access the lab through four surfaces: the Satellite Web UI tab, a satellite.lab terminal, a rhel1.lab terminal, and a rhel2.lab terminal.
+
+include::ROOT:nav.adoc[]
