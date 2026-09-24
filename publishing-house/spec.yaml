@@ -45,7 +45,7 @@ spec:
     - id: module-05
       title: "Configure a host group"
       duration_min: 5
-      status: in_progress
+      status: complete
     - id: module-06
       title: "Create a compliance policy"
       duration_min: 5
