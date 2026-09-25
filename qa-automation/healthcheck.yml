@@ -1,7 +1,10 @@
 ---
-# HEALTHCHECK — Quick environment readiness check (migrated ZT Guided content)
-# Verifies the bastion host is reachable via SSH. Non-destructive: does not
-# modify any lab state. Should complete in under 60 seconds.
+# HEALTHCHECK — Quick environment readiness check (Satellite Compliance lab)
+# Verifies all hosts are reachable and Satellite services are operational.
+# Non-destructive: does not modify any lab state.
+# Should complete in under 60 seconds.
+#
+# Required env vars: BASTION_HOST, BASTION_PORT, BASTION_USER, BASTION_PASSWORD
 #
 # Exit 0 = healthy, non-zero = unhealthy.
 
@@ -9,16 +12,78 @@
   hosts: localhost
   gather_facts: false
   tasks:
-    - name: Add bastion host
+    - name: Add bastion (satellite) host
       ansible.builtin.add_host:
         name: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
         ansible_ssh_host: "{{ lookup('ansible.builtin.env', 'BASTION_HOST') }}"
         ansible_ssh_port: "{{ lookup('ansible.builtin.env', 'BASTION_PORT') }}"
         ansible_ssh_user: "{{ lookup('ansible.builtin.env', 'BASTION_USER') }}"
         ansible_ssh_pass: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
+        ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+        groups: satellite
 
-- name: Healthcheck
-  hosts: all:!localhost
+    - name: Add RHEL target hosts
+      ansible.builtin.add_host:
+        name: "{{ item }}"
+        ansible_ssh_host: "{{ item }}"
+        ansible_ssh_port: "{{ lookup('ansible.builtin.env', 'BASTION_PORT') }}"
+        ansible_ssh_user: "{{ lookup('ansible.builtin.env', 'BASTION_USER') }}"
+        ansible_ssh_pass: "{{ lookup('ansible.builtin.env', 'BASTION_PASSWORD') }}"
+        ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+        ansible_python_interpreter: /usr/libexec/platform-python
+        groups: rhel_targets
+      loop:
+        - rhel1
+        - rhel2
+
+- name: Healthcheck - Satellite host
+  hosts: satellite
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Verify SSH connectivity
+      ansible.builtin.ping:
+
+    - name: Verify Satellite services are running
+      ansible.builtin.command:
+        cmd: hammer ping
+      changed_when: false
+
+    - name: Verify Satellite Web UI is responding
+      ansible.builtin.uri:
+        url: https://localhost/users/login
+        validate_certs: false
+        status_code: [200, 302]
+      changed_when: false
+
+    - name: Verify required repositories are synced
+      ansible.builtin.shell:
+        cmd: >-
+          hammer --output json repository list
+          --organization "Acme Org"
+          --fields "Name,Status" |
+          python3 -c "
+          import json, sys;
+          repos = json.load(sys.stdin);
+          required = [
+            'Red Hat Enterprise Linux 10 for x86_64 - BaseOS RPMs 10',
+            'Red Hat Enterprise Linux 10 for x86_64 - AppStream RPMs 10',
+            'Red Hat Satellite Client 6 for RHEL 10 x86_64 RPMs'
+          ];
+          found = [r['Name'] for r in repos];
+          missing = [r for r in required if r not in found];
+          sys.exit(1) if missing else print('All 3 required repos present')
+          "
+      changed_when: false
+
+    - name: Verify CVE map file exists
+      ansible.builtin.stat:
+        path: /var/lib/foreman/cvemap.xml
+      register: r_cvemap
+      failed_when: not r_cvemap.stat.exists
+
+- name: Healthcheck - RHEL target hosts
+  hosts: rhel_targets
   gather_facts: false
   become: false
   tasks:
