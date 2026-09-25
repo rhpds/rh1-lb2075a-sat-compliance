@@ -10,15 +10,49 @@ Do the following to run an OpenSCAP scan on both `rhel1.lab` and `rhel2.lab`.
 .Step 1 - Run an OpenSCAP scan on a host
 [%collapsible]
 ====
-Navigate to ** Hosts > All Hosts** and click on `rhel1.lab` and `rhel2.lab`.
+Navigate to ** Hosts > All Hosts** and click on `rhel1.lab`.
 
-.Hosts menu
-image::scan-select-rhel1-rhel2.png[]
+NOTE: Due to a https://redhat.atlassian.net/browse/SAT-51400[bug] in the Satellite UI, this step is broken. We'll need to work around the bug by switching to the legacy UI.
 
-Next, click on the accordion button next to the `Schedule a job` button and select `Run OpenSCAP scan`.
+Click on the burger button in the right side corner of the UI.
 
-.Run OpenSCAP scan
-image::scan-run-openscap-scan.png[]
+.Click on the burger button
+image::burger-button.png[]
+
+Select `Legacy UI`
+
+.Click legacy UI
+image::legacy-ui.png[]
+
+Select both `rhel1` and `rhel2`.
+
+.Select hosts
+image::legacy-select-hosts.png[]
+
+Click the `Select Action` button.
+
+.Select action
+image::click-select-action.png[]
+
+Click `Schedule Remote Job`.
+
+.Schedule Remote Job
+image::schedule-remote-job.png[]
+
+In the `Category and Template` menu do the following.
+
+. Select the `OpenSCAP` job category.
+. Select the `Run OpenSCAP scans` job template.
+
+.Category and Template
+image::category-and-template.png[]
+
+Click next.
+
+Then finally, click `Run on selected hosts`.
+
+.Run
+image::run-openscap-scan-multiple-hosts.png[]
 
 ====
 =====
