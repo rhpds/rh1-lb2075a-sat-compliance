@@ -56,24 +56,10 @@
         status_code: [200, 302]
       changed_when: false
 
-    - name: Verify required repositories are synced
+    - name: Verify required repositories exist
       ansible.builtin.shell:
-        cmd: >-
-          hammer --output json repository list
-          --organization "Acme Org"
-          --fields "Name,Status" |
-          python3 -c "
-          import json, sys;
-          repos = json.load(sys.stdin);
-          required = [
-            'Red Hat Enterprise Linux 10 for x86_64 - BaseOS RPMs 10',
-            'Red Hat Enterprise Linux 10 for x86_64 - AppStream RPMs 10',
-            'Red Hat Satellite Client 6 for RHEL 10 x86_64 RPMs'
-          ];
-          found = [r['Name'] for r in repos];
-          missing = [r for r in required if r not in found];
-          sys.exit(1) if missing else print('All 3 required repos present')
-          "
+        cmd: |
+          hammer --output json repository list --organization "Acme Org" --fields "Name" | python3 -c "import json,sys; repos=json.load(sys.stdin); found=[r['Name'] for r in repos]; required=['Red Hat Enterprise Linux 10 for x86_64 - BaseOS RPMs 10','Red Hat Enterprise Linux 10 for x86_64 - AppStream RPMs 10','Red Hat Satellite Client 6 for RHEL 10 x86_64 RPMs']; missing=[r for r in required if r not in found]; sys.exit(1) if missing else print('All 3 required repos present')"
       changed_when: false
 
     - name: Verify CVE map file exists
